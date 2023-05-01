@@ -1,11 +1,9 @@
 import "./App.css";
-import withResults from "./mocks/with-results.json";
-import noResults from "./mocks/no-results.json";
 import Movies from "./components/Movies";
+import useMovies from "./hooks/useMovies";
 
 function App() {
-  const movies = withResults.Search;
-
+  const { movies } = useMovies();
   return (
     <div className="page">
       <header>
