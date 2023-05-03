@@ -1,31 +1,27 @@
-import { useState } from "react";
-import withResults from "../mocks/with-results.json";
-import noResults from "../mocks/no-results.json";
+import { useRef, useState } from "react";
+import { searchMovies } from "../services/movies";
 
 const useMovies = ({ query }) => {
-  const [responseMovies, setResponseMovies] = useState([]);
-  const movies = responseMovies.Search;
+  const previousQuery = useRef(query);
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const mappedMovies = movies?.map((movie) => ({
-    id: movie.imdbID,
-    title: movie.Title,
-    year: movie.Year,
-    poster: movie.Poster,
-  }));
-
-  const getMovies = () => {
-    if (query) {
-      fetch(`https://www.omdbapi.com/?apikey=e9c3d6c3&s=${query}`)
-        .then((res) => res.json())
-        .then((json) => {
-          setResponseMovies(json);
-        });
-    } else {
-      setResponseMovies(noResults);
+  const getMovies = async () => {
+    if (query === previousQuery.current) return;
+    try {
+      setLoading(true);
+      setError(null);
+      const newMovies = await searchMovies({ query });
+      setMovies(newMovies);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { movies: mappedMovies, getMovies };
+  return { movies, error, loading, getMovies };
 };
 
 export default useMovies;

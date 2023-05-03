@@ -5,7 +5,7 @@ import useSearch from "./hooks/useSearch";
 
 function App() {
   const { query, setQuery, error } = useSearch();
-  const { movies, getMovies } = useMovies({ query });
+  const { movies, loading, getMovies } = useMovies({ query });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ function App() {
       </header>
       <main>
         <h3>Peliculas</h3>
-        <Movies movies={movies} />
+        {loading ? <p>Cargando....</p> : <Movies movies={movies} />}
       </main>
     </div>
   );
