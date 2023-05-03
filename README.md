@@ -11,4 +11,4 @@ Con este comando descargas los paquetes necesarios para que la aplicación funci
 
 ### `npm run dev`
 Con este comando puedes ver la aplicación en tu equipo local.
-Abre [http://localhost:3000](http://localhost:3000) para verlo en tu navegador.
+Abre [http://localhost:3000](http://localhost:5173) para verlo en tu navegador.
